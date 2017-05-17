@@ -56,9 +56,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -73,7 +70,6 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
-import java.nio.Buffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -86,6 +82,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+//import com.google.android.gms.common.ConnectionResult;
+//import com.google.android.gms.common.GoogleApiAvailability;
 
 public class Util {
     private static final int NETWORK_TYPE_TD_SCDMA = 17;
@@ -429,10 +428,10 @@ public class Util {
         return "com.android.vending".equals(context.getPackageManager().getInstallerPackageName(context.getPackageName()));
     }
 
-    public static boolean hasPlayServices(Context context) {
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        return (api.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS);
-    }
+//    public static boolean hasPlayServices(Context context) {
+//        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+//        return (api.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS);
+//    }
 
     public static String getFingerprint(Context context) {
         try {

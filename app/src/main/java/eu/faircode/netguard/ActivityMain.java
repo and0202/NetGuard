@@ -33,7 +33,7 @@ import android.net.Uri;
 import android.net.VpnService;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -41,9 +41,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -67,17 +66,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 import java.util.List;
+
+//import com.google.android.gms.ads.AdListener;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdSize;
+//import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.MobileAds;
 
 public class ActivityMain extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "NetGuard.Main";
@@ -425,7 +423,7 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
             adapter.notifyDataSetChanged();
 
         // Ads
-        if (!IAB.isPurchasedAny(this) && Util.hasPlayServices(this))
+        if (!IAB.isPurchasedAny(this) )
             enableAds();
         else
             disableAds();
@@ -449,7 +447,7 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
         super.onConfigurationChanged(newConfig);
 
         disableAds();
-        if (!IAB.isPurchasedAny(this) && Util.hasPlayServices(this))
+        if (!IAB.isPurchasedAny(this) )
             enableAds();
     }
 
@@ -892,11 +890,11 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
 
     private void initAds() {
         // https://developers.google.com/android/reference/com/google/android/gms/ads/package-summary
-        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
+//        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
 
         final LinearLayout llAd = (LinearLayout) findViewById(R.id.llAd);
         TextView tvAd = (TextView) findViewById(R.id.tvAd);
-        final AdView adView = (AdView) findViewById(R.id.adView);
+//        final AdView adView = (AdView) findViewById(R.id.adView);
 
         SpannableString content = new SpannableString(getString(R.string.title_pro_ads));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -909,92 +907,92 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
             }
         });
 
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                Log.i(TAG, "Ad loaded");
-                llAd.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                llAd.setVisibility(View.VISIBLE);
-                switch (errorCode) {
-                    case AdRequest.ERROR_CODE_INTERNAL_ERROR:
-                        Log.w(TAG, "Ad load error=INTERNAL_ERROR");
-                        break;
-                    case AdRequest.ERROR_CODE_INVALID_REQUEST:
-                        Log.w(TAG, "Ad load error=INVALID_REQUEST");
-                        break;
-                    case AdRequest.ERROR_CODE_NETWORK_ERROR:
-                        Log.w(TAG, "Ad load error=NETWORK_ERROR");
-                        break;
-                    case AdRequest.ERROR_CODE_NO_FILL:
-                        Log.w(TAG, "Ad load error=NO_FILL");
-                        break;
-                    default:
-                        Log.w(TAG, "Ad load error=" + errorCode);
-                }
-            }
-
-            @Override
-            public void onAdOpened() {
-                Log.i(TAG, "Ad opened");
-            }
-
-            @Override
-            public void onAdClosed() {
-                Log.i(TAG, "Ad closed");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                Log.i(TAG, "Ad left app");
-            }
-        });
+//        adView.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdLoaded() {
+//                Log.i(TAG, "Ad loaded");
+//                llAd.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onAdFailedToLoad(int errorCode) {
+//                llAd.setVisibility(View.VISIBLE);
+//                switch (errorCode) {
+//                    case AdRequest.ERROR_CODE_INTERNAL_ERROR:
+//                        Log.w(TAG, "Ad load error=INTERNAL_ERROR");
+//                        break;
+//                    case AdRequest.ERROR_CODE_INVALID_REQUEST:
+//                        Log.w(TAG, "Ad load error=INVALID_REQUEST");
+//                        break;
+//                    case AdRequest.ERROR_CODE_NETWORK_ERROR:
+//                        Log.w(TAG, "Ad load error=NETWORK_ERROR");
+//                        break;
+//                    case AdRequest.ERROR_CODE_NO_FILL:
+//                        Log.w(TAG, "Ad load error=NO_FILL");
+//                        break;
+//                    default:
+//                        Log.w(TAG, "Ad load error=" + errorCode);
+//                }
+//            }
+//
+//            @Override
+//            public void onAdOpened() {
+//                Log.i(TAG, "Ad opened");
+//            }
+//
+//            @Override
+//            public void onAdClosed() {
+//                Log.i(TAG, "Ad closed");
+//            }
+//
+//            @Override
+//            public void onAdLeftApplication() {
+//                Log.i(TAG, "Ad left app");
+//            }
+//        });
     }
 
     private void enableAds() {
-        RelativeLayout rlAd = (RelativeLayout) findViewById(R.id.rlAd);
-        LinearLayout llAd = (LinearLayout) findViewById(R.id.llAd);
-        final AdView adView = (AdView) findViewById(R.id.adView);
-
-        rlAd.setVisibility(View.VISIBLE);
-        llAd.setVisibility(View.VISIBLE);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    AdRequest adRequest = new AdRequest.Builder()
-                            .addTestDevice(getString(R.string.ad_test_device_id))
-                            .build();
-                    adView.loadAd(adRequest);
-                } catch (Throwable ex) {
-                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
-                }
-            }
-        }, 1000);
+//        RelativeLayout rlAd = (RelativeLayout) findViewById(R.id.rlAd);
+//        LinearLayout llAd = (LinearLayout) findViewById(R.id.llAd);
+////        final AdView adView = (AdView) findViewById(R.id.adView);
+//
+//        rlAd.setVisibility(View.VISIBLE);
+//        llAd.setVisibility(View.VISIBLE);
+//
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+////                try {
+////                    AdRequest adRequest = new AdRequest.Builder()
+////                            .addTestDevice(getString(R.string.ad_test_device_id))
+////                            .build();
+////                    adView.loadAd(adRequest);
+////                } catch (Throwable ex) {
+////                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
+////                }
+//            }
+//        }, 1000);
     }
 
     private void disableAds() {
-        RelativeLayout rlAd = (RelativeLayout) findViewById(R.id.rlAd);
-        AdView adView = (AdView) findViewById(R.id.adView);
-
-        rlAd.setVisibility(View.GONE);
-
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) adView.getLayoutParams();
-        RelativeLayout parent = (RelativeLayout) adView.getParent();
-        parent.removeView(adView);
-
-        adView.destroy();
-        adView = new AdView(this);
-        adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId(getString(R.string.ad_banner_unit_id));
-        adView.setId(R.id.adView);
-        adView.setLayoutParams(params);
-        parent.addView(adView);
+//        RelativeLayout rlAd = (RelativeLayout) findViewById(R.id.rlAd);
+////        AdView adView = (AdView) findViewById(R.id.adView);
+//
+//        rlAd.setVisibility(View.GONE);
+//
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) adView.getLayoutParams();
+//        RelativeLayout parent = (RelativeLayout) adView.getParent();
+//        parent.removeView(adView);
+//
+//        adView.destroy();
+//        adView = new AdView(this);
+//        adView.setAdSize(AdSize.SMART_BANNER);
+//        adView.setAdUnitId(getString(R.string.ad_banner_unit_id));
+//        adView.setId(R.id.adView);
+//        adView.setLayoutParams(params);
+//        parent.addView(adView);
     }
 
     private void checkExtras(Intent intent) {
